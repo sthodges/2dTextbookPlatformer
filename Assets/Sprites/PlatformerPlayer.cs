@@ -41,12 +41,34 @@ public class PlatformerPlayer : MonoBehaviour {
 			_body.AddForce (Vector2.up * jumpforce, ForceMode2D.Impulse);
 		}
 
+		MovingPlatform platform = null;
+
+		if (hit != null) {
+			//platform = hit.GetComponent<MovingPlatform> ();
+			platform = hit.GetComponent<MovingPlatform> ();
+
+			if (platform != null) {
+				transform.parent = platform.transform;
+			} else {
+				transform.parent = null;
+			}
+		}
+	   
 
 		_anim.SetFloat ("speed", Mathf.Abs (deltaX));
+		Vector3 pScale = Vector3.one;
 
-		if (!Mathf.Approximately (deltaX, 0)) {
+		if (platform != null) {
+			pScale = platform.transform.localScale;
+		}
+			
+		//if (!Mathf.Approximately (deltaX, 0)) {
+			if (deltaX != 0.0f) {	
 
-			transform.localScale = new Vector3 (Mathf.Sign (deltaX), 1, 1);
+			transform.localScale = new Vector3 (Mathf.Sign (deltaX)/pScale.x, 1/pScale.y, 1);
+		
+			//transform.localScale = new Vector3 (Mathf.Sign (deltaX), 1, 1);
+
 		}
 
 	}

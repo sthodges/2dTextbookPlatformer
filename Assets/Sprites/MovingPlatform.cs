@@ -28,4 +28,10 @@ public class MovingPlatform : MonoBehaviour {
 			_direction = -_direction;
 		}
 	}
+
+	void OnDrawGizmos(){
+		Gizmos.color = Color.red;
+		Gizmos.DrawLine (transform.position, finishPos);
+
+	}
 }
